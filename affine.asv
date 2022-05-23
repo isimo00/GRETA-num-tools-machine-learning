@@ -1,0 +1,12 @@
+function [w, y] = affine(A_in,b)
+%UNTITLED3 Summary of this function goes here
+% INPUTS:
+%   A: Desing matrix [m, n]
+%   b: Column vector, reference values [m, r]
+%   Detailed explanation goes here
+A= zeros(length(A_in), 2);
+A(:, 1) = ones(length(A_in), 1);
+A(:, 2) = A_in;
+w = A\b;
+y = A*w;
+end
