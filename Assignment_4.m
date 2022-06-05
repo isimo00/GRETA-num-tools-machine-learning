@@ -74,7 +74,7 @@ for k = 1:length(lambda)
             var_train(i, k) = var_train(i, k)+(ed2_train - theta_m)^2;
         end
         MSEd2_train(i,k) = (1/train_length)*ed2_train_total;
-        var_train(:, i, k) = var_train(:, i, k)/train_length;
+        var_train(:, k) = var_train(:, k)/train_length;
         % Test part
         affine_test(:,i,k) = wd2(1,i,k)+wd2(2,i,k)*A_test(:,i);
         ed2_test_total = 0;
@@ -82,10 +82,10 @@ for k = 1:length(lambda)
         for e = 1:test_length
             ed2_test = (affine_test(e,i,k)-b_test(e,i))^2;
             ed2_test_total = ed2_test_total+ed2_test; 
-            var_test(i, k) = vart_test(i, k)+(ed2_test - theta_m)^2;
+            var_test(i, k) = var_test(i, k)+(ed2_test - theta_m)^2;
         end
         MSEd2_test(i,k) = (1/test_length)*ed2_test_total;
-        var_test(i, k) = var_test(i, k)/test_length;
+        var_test(:, k) = var_test(:, k)/test_length;
     end
     MSEd2_train_average(k) = mean(MSEd2_train(:,k));
     MSEd2_train_max(k) = max(MSEd2_train(:,k));
@@ -115,7 +115,7 @@ legend('Train data','Test data','Affine regression','Location',...
 
 figure('Position',[550 50 800 400]);
 figure()
-errorbar(lambda, MSEd2_train_average, var_train);
+errorbar(lambda, MSEd2_train_average, var_train(1, :));
 figure()
 errorbar(lambda, MSEd2_test_average, var_test);
 hold off
